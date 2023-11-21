@@ -17,24 +17,16 @@ const app = new Hono();
 
 app.get('/', (c) => c.text('Welcome to dinosaur API!'));
 
-app.get('/api/', async (c) => {
+app.post('/api/', async (c) => {
+  const body = await c.req.parseBody();
+  console.log(body['email']);
   await client.send({
     from: 'bagusadityaadnyana@gmail.com',
-    to: 'jimmyeatcrab@gmail.com',
+    to: body['email'],
     subject: 'Welcome!',
-    content: 'Hi from Vuelancer!',
+    content: `<img src="https://api.qrserver.com/v1/create-qr-code/?data=${body['email']}" alt="Seminar 1 Image">`,
   });
   await client.close();
-});
-
-app.get('/api/:dinosaur', (c) => {
-  const dinosaur = c.req.param('dinosaur').toLowerCase();
-  const found = data.find((item) => item.name.toLowerCase() === dinosaur);
-  if (found) {
-    return c.json(found);
-  } else {
-    return c.text('No dinosaurs found.');
-  }
 });
 
 Deno.serve(app.fetch);
