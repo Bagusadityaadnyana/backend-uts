@@ -8,7 +8,7 @@ const client = new SmtpClient();
 
 const app = new Hono();
 
-app.get('/', (c) => c.text('Welcome to dinosaur API!'));
+app.get('/', (c) => c.text('test dinosaurs'));
 
 app.post('/api/', async (c) => {
   const connectConfig: any = {
