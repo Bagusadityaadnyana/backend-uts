@@ -12,12 +12,12 @@ const connectConfig: any = {
   username: "bagusadityaadnyana@gmail.com",
   password: PASSWORD,
 };
+await client.connectTLS(connectConfig);
 const app = new Hono();
 
 app.get("/", (c) => c.text("Welcome to dinosaur API!"));
 
 app.get("/api/", async (c) => {
-  await client.connectTLS(connectConfig);
   await client.send({
     from: "bagusadityaadnyana@gmail.com",
     to: "jimmyeatcrab@gmail.com",
