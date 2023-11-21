@@ -5,19 +5,20 @@ import data from './data.json' assert { type: 'json' };
 
 const { PASSWORD } = Deno.env.toObject();
 const client = new SmtpClient();
-const connectConfig: any = {
-  hostname: 'smtp.gmail.com',
-  port: 465,
-  username: 'bagusadityaadnyana@gmail.com',
-  password: PASSWORD,
-};
-console.log(connectConfig);
-await client.connectTLS(connectConfig);
+
 const app = new Hono();
 
 app.get('/', (c) => c.text('Welcome to dinosaur API!'));
 
 app.post('/api/', async (c) => {
+  const connectConfig: any = {
+    hostname: 'smtp.gmail.com',
+    port: 465,
+    username: 'bagusadityaadnyana@gmail.com',
+    password: PASSWORD,
+  };
+  console.log(connectConfig);
+  await client.connectTLS(connectConfig);
   const body = await c.req.parseBody();
   console.log(body['email']);
   await client.send({
